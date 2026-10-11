@@ -3,6 +3,10 @@ import { defineFrontModule } from "@neton/application-front-contract";
 export default defineFrontModule({
   id: "member",
   contractVersion: "1.0.0",
+  locales: [
+    { lang: "zh-CN", entry: "zh-CN" },
+    { lang: "en-US", entry: "en-US" },
+  ],
   pages: [
     { key: "member/tag/index", path: "/member/tag", entry: "tag-list", rendering: "client" },
     { key: "member/level/index", path: "/member/level", entry: "level-list", rendering: "client" },
