@@ -4,11 +4,13 @@ import { apiFetch, apiWrite } from "@neton/application-front-runtime/client";
 import { useMutation, usePermission, useQuery, useQueryClient } from "@neton/application-front-runtime/client-context";
 import { Button, Field, Input, PageHeader, Select } from "@neton/application-front-kit";
 import { useT } from "@neton/application-front-runtime/i18n";
+import { useDescribeError } from "@neton/application-front-runtime/errors";
 
 interface Config { pointTradeDeductEnable: number; pointTradeDeductUnitPrice: number; pointTradeDeductMaxPrice: number; pointTradeGivePoint: number }
 
 export default function MemberConfigPage() {
   const t = useT("member");
+  const describeError = useDescribeError("member");
   const client = useQueryClient();
   const canUpdate = usePermission("member:config:update");
   const query = useQuery({ queryKey: ["member-config"], queryFn: () => apiFetch<Config>("/admin/member/config/get") });
@@ -23,6 +25,7 @@ export default function MemberConfigPage() {
         <Field label={t("config.field.deductUnitPrice")}><Input type="number" min={0} value={form.pointTradeDeductUnitPrice} onChange={(event) => setForm({ ...form, pointTradeDeductUnitPrice: Number(event.target.value) })} /></Field>
         <Field label={t("config.field.deductMaxPrice")}><Input type="number" min={0} value={form.pointTradeDeductMaxPrice} onChange={(event) => setForm({ ...form, pointTradeDeductMaxPrice: Number(event.target.value) })} /></Field>
         <Field label={t("config.field.givePoint")}><Input type="number" min={0} value={form.pointTradeGivePoint} onChange={(event) => setForm({ ...form, pointTradeGivePoint: Number(event.target.value) })} /></Field>
+        {mutation.error && <div role="alert" className="md:col-span-2 rounded-lg bg-red-50 p-3 text-xs text-red-700">{describeError(mutation.error)}</div>}
         <div className="md:col-span-2 flex justify-end"><Button type="submit" disabled={!canUpdate || mutation.isPending}>{mutation.isPending ? t("common.saving") : t("config.action.save")}</Button></div>
       </form>}
     </section>

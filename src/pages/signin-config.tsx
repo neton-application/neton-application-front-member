@@ -21,7 +21,7 @@ interface Setting { category:string; key:string; value:string; valueType:number;
  */
 function GlobalSetting() {
   const t = useT("member");
-  const describeError = useDescribeError();
+  const describeError = useDescribeError("member");
   const client = useQueryClient();
   const canUpdate = usePermission("member:signin:update");
   const [open, setOpen] = React.useState(false);
@@ -66,5 +66,5 @@ function GlobalSetting() {
 
 export default function Page() {
   const t = useT("member");
-  return <ResourcePage config={{ resourceKey: "member-signin-config", eyebrow: t("signinConfig.eyebrow"), title: t("signinConfig.title"), description: t("signinConfig.description"), endpoint: "/member/sign-in/config", listPath: "list-all", permissions: { page: "member:signin:query", create: "member:signin:create", update: "member:signin:update", delete: "member:signin:delete" }, headerActions: <GlobalSetting />, fields: [{ key: "day", label: t("common.day"), type: "number", defaultValue: 1, required: true }, { key: "point", label: t("common.point"), type: "number", defaultValue: 0 }, { key: "experience", label: t("common.experience"), type: "number", defaultValue: 0 }, { key: "cashAmount", label: t("signinConfig.field.cashAmount"), type: "number", defaultValue: 0 }, { key: "status", label: t("common.status"), type: "select", defaultValue: 1, format: "status", options: [{ label: t("common.enabled"), value: 1 }, { label: t("common.disabled"), value: 0 }] }] }} />;
+  return <ResourcePage config={{ errorNamespace: "member", resourceKey: "member-signin-config", eyebrow: t("signinConfig.eyebrow"), title: t("signinConfig.title"), description: t("signinConfig.description"), endpoint: "/member/sign-in/config", listPath: "list-all", permissions: { page: "member:signin:query", create: "member:signin:create", update: "member:signin:update", delete: "member:signin:delete" }, headerActions: <GlobalSetting />, fields: [{ key: "day", label: t("common.day"), type: "number", defaultValue: 1, required: true }, { key: "point", label: t("common.point"), type: "number", defaultValue: 0 }, { key: "experience", label: t("common.experience"), type: "number", defaultValue: 0 }, { key: "cashAmount", label: t("signinConfig.field.cashAmount"), type: "number", defaultValue: 0 }, { key: "status", label: t("common.status"), type: "select", defaultValue: 1, format: "status", options: [{ label: t("common.enabled"), value: 1 }, { label: t("common.disabled"), value: 0 }] }] }} />;
 }
